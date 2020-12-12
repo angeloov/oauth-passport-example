@@ -32,8 +32,18 @@ app.use(passport.session());
 import passportConfig from './config/passport';
 passportConfig(passport);
 
+/*
+ * GET /auth/google
+ *
+ * Redirect to Google Login.
+ */
 app.get('/auth/google', passport.authenticate('google', { scope: ['openid', 'email', 'profile'] }));
 
+/*
+ * GET /auth/google/callback
+ *
+ * Callback redirect after user has logged into Google.
+ */
 app.get(
 	'/auth/google/callback',
 	passport.authenticate('google', { failureRedirect: '/protected.html' }),
@@ -44,6 +54,11 @@ app.get(
 	}
 );
 
+/*
+ * GET /protected
+ *
+ * Get the user info object
+ */
 app.get('/protected', (req, res) => {
 	console.log('request on protected route');
 	res.json(req.user);

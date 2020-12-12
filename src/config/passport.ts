@@ -10,14 +10,13 @@ export default function (passport: any) {
 				clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 				callbackURL: 'http://localhost:4000/auth/google/callback',
 			},
-			async function (accessToken: string, refreshToken: string, profile: any, done: any) {
-				// Typically you would query the database to find the user record
-				// associated with this Google profile, then pass that object to the `done`
-				// callback.
+			async function (accessToken: string, _: string, profile: any, done: any) {
+				// Find or create the user and then
+				// call the `done` function
 
 				let googleProfile = profile['_json'];
 
-				// Find or Create
+				// Find or create from the db
 				let user = await prisma.users.upsert({
 					where: {
 						googleid: profile.id,
