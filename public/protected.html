@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="it">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Protected</title>
+	</head>
+	<body>
+		<h1 class="name"></h1>
+		<h1 class="lastname"></h1>
+		<h1 class="email"></h1>
+		<script>
+			async function main() {
+				try {
+					let req = await fetch('/protected');
+					let user = await req.json();
+
+					// Display firstname
+					let nameEl = document.querySelector('.name');
+					nameEl.textContent = 'Firstname: ' + user.firstname;
+
+					// Display lastname
+					let lastnameEl = document.querySelector('.lastname');
+					lastnameEl.textContent = 'Lastname: ' + user.lastname;
+
+					// Display email
+					let emailEl = document.querySelector('.email');
+					emailEl.textContent = 'Your email: ' + user.email;
+				} catch {
+					document.write('You are not authenticated');
+				}
+			}
+
+			main();
+		</script>
+	</body>
+</html>
